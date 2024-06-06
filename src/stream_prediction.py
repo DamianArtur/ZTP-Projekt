@@ -18,7 +18,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 model_path = os.path.abspath('model/linear_regression_model.joblib')
 file = os.path.abspath('data/apartments_pl_2024_01.csv')
-output_file = os.path.abspath('data/predictions.csv')
+output_file = os.path.abspath('results/predictions.csv')
 
 
 def load_model(model_path) -> LinearRegression:
@@ -44,7 +44,7 @@ def process_stream_data(data) -> Tuple[np.ndarray, Any]:
 
 
 def save_predictions(predictions) -> None:
-    with open(output_file, 'a') as f:
+    with open(output_file, 'a+') as f:
         for data, prediction in predictions:
             data_values = data.compute().flatten().tolist()
             f.write(f"{data_values},{prediction}\n")

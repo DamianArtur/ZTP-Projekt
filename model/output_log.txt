@@ -1,0 +1,12 @@
+Date and time of execution: 2024-06-06 09:24:58
+Accuracy (R^2): 59.0%
+MAE : 0.46
+RMSE : 0.64
+
+
+Date and time of execution: 2024-06-06 09:26:19
+Accuracy (R^2): 59.0%
+MAE : 0.46
+RMSE : 0.64
+
+

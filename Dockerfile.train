@@ -1,0 +1,12 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src/linear_regression.py src/linear_regression.py
+COPY src/read_file.py src/read_file.py
+
+CMD ["python", "src/linear_regression.py"]
