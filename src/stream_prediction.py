@@ -1,3 +1,4 @@
+import os
 from typing import Generator, Tuple, Any
 
 from streamz import Stream
@@ -8,15 +9,21 @@ from dask.dataframe import DataFrame
 
 import numpy as np
 import time
+import warnings
 
 from read_file import read_and_clear_file
 
-model_path = '../model/linear_regression_model.joblib'
-file = '../data/apartments_pl_2024_01.csv'
-output_file = '../data/predictions.csv'
+
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+model_path = os.path.abspath('model/linear_regression_model.joblib')
+file = os.path.abspath('data/apartments_pl_2024_01.csv')
+output_file = os.path.abspath('data/predictions.csv')
+
 
 def load_model(model_path) -> LinearRegression:
     return joblib.load(model_path)
+
 
 def generate_stream_data(file) -> Generator[Tuple[DataFrame], None, None]:
     data_frame = read_and_clear_file(file)
@@ -29,10 +36,12 @@ def generate_stream_data(file) -> Generator[Tuple[DataFrame], None, None]:
     for row in selected_rows:
         yield row.reshape(1, -1)
 
+
 def process_stream_data(data) -> Tuple[np.ndarray, Any]:
     model = load_model(model_path)
     prediction = model.predict(data).compute()
     return data, prediction
+
 
 def save_predictions(predictions) -> None:
     with open(output_file, 'a') as f:
@@ -51,6 +60,6 @@ if __name__ == '__main__':
 
     for new_data in data_generator:
         stream.emit(new_data)
-        time.sleep(0.1)
+        time.sleep(1)
 
     save_predictions(predictions)

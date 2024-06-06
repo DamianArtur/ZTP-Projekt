@@ -1,3 +1,4 @@
+import os
 from typing import Tuple
 
 import joblib
@@ -47,6 +48,7 @@ def linear_regression(X_train, X_test, y_train, y_test, model_file) -> None:
     print(f'MAE : {round(mean_absolute_error(y_test, y_pred), 2)}')
     print(f'RMSE : {round(np.sqrt(mean_squared_error(y_test, y_pred)), 2)}')
 
+
 def run_model(file, model_file) -> None:
     housing_data = read_and_clear_file(file)
     scaled_data = data_preparation(housing_data)
@@ -57,9 +59,10 @@ def run_model(file, model_file) -> None:
 
     linear_regression(X_training, X_testing, y_training, y_testing, model_file)
 
+
 if __name__ == '__main__':
-    file = '../data/apartments_pl_2024_01.csv'
-    model_file = '../model/linear_regression_model.joblib'
+    file = os.path.abspath('data/apartments_pl_2024_01.csv')
+    model_file = os.path.abspath('model/linear_regression_model.joblib')
 
     schedule.every().hour.do(run_model, file=file, model_file=model_file)
 
