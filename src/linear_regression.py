@@ -5,6 +5,7 @@ import joblib
 
 import schedule
 import time
+import pytz
 import datetime
 import warnings
 
@@ -48,8 +49,9 @@ def linear_regression(X_train, X_test, y_train, y_test, model_file) -> None:
 
     y_pred = lr.predict(X_test).compute()
 
-    now = datetime.datetime.now()
-    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    time_utc = datetime.datetime.utcnow()
+    current_time = time_utc.astimezone(pytz.timezone('Europe/Warsaw'))
+    current_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
     with open("./model/output_log.txt", "a+") as f:
         f.write(f"Date and time of execution: {current_time}\n")
