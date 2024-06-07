@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+    volumes:
+      - ./data:/app/data
+      - ./model:/app/model
+      - ./results:/app/results
+      
+
+  predict:
+    build:
+      context: .
+      dockerfile: Dockerfile.predict
+    volumes:
+      - ./data:/app/data
+      - ./model:/app/model
+      - ./results:/app/results
+
+volumes:
+  data:
+  model:
+  results:
