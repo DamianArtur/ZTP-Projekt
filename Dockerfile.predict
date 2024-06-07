@@ -6,7 +6,6 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/stream_prediction.py src/stream_prediction.py
-COPY src/read_file.py src/read_file.py
+COPY . .
 
 CMD ["python", "src/stream_prediction.py"]
